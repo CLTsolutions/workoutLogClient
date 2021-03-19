@@ -4,10 +4,20 @@
 import React, { useState, useEffect } from 'react';
 import { Col, Container, Row } from 'reactstrap';
 import WorkoutCreate from './WorkoutCreate';
+import WorkoutTable from './WorkoutTable';
+import WorkoutEdit from './WorkoutEdit';
 
 const WorkoutIndex = (props) => {
     //workouts state is an arr that will be filled with workout objects returned from WOL server
     const [workouts, setWorkouts] = useState([]);
+    //updateActive used to conditionally display WorkoutEdit component (initialized to boolean value)
+    const [updateActive, setUpdateActive] = useState(false);
+    //workoutToUpdate will be used as a prop by WorkoutEdit
+    //when the user clicks on a row of the WorkoutTable, workoutToUpdate will be switched from an
+        //--empty object to the workout object displayed by the row the user clicked on.
+        //--WorkoutEdit will use this workout object to request updated workout details to the 
+            //--appropriate workout in our database.
+    const [workoutToUpdate, setWorkoutToUpdate] = useState({});
 
     //fetchWorkouts gets workouts from the server
     //including auth header (so server knows who is making request and understand them.
@@ -28,6 +38,23 @@ const WorkoutIndex = (props) => {
         }))
     }
 
+    //updates our workoutToUpdate state variable based upon the input to this function
+    const editUpdateWorkout = (workout) => {
+        setWorkoutToUpdate(workout);
+        console.log(workout);
+    }
+
+    //used to toggle our WorkoutEdit display.
+    //updateOn is passed as a prop to WorkoutTable, and used when user clicks on Update btn
+    const updateOn = () => {
+        setUpdateActive(true);
+    }
+
+    // used by WorkoutEdit when user has completed or cancelled the workout edit process
+    const updateOff = () => {
+        setUpdateActive(false);
+    }
+
     //Need to call fetchWorkouts when component mounts
     //A useEffect with an optional second argument of an empty array will call whatever callback we give 
         //the useEffect function only once--as the component initially loads
@@ -44,10 +71,24 @@ const WorkoutIndex = (props) => {
                         page after WorkoutCreate posts a new workout to the db
                         - Also passing token as a prop so we can access the guarded 
                             workoutlog post endpoint. */}
-                    <WorkoutCreate fetchWorkouts={fetchWorkouts} token={props.token} />
+                    <WorkoutCreate 
+                        fetchWorkouts={fetchWorkouts} 
+                        token={props.token} />
                 </Col>
                 <Col>
-                    <h2>Log a workout to see a table. This will be added in later pages.</h2>
+                {/*Why so many props to WorkoutTable?
+                    *workouts are the workout objets WorkoutTable will be responsible for mapping to 
+                        -- the page
+                    *fetchWorkouts allows us to update the workouts shown to the page if the user 
+                        -- decides to delete a workout
+                    *token is necessary for WorkoutTable to access guarded delete workout endpoint. */}
+                    <WorkoutTable 
+                        workouts={workouts}
+                        editUpdateWorkout={editUpdateWorkout} 
+                        updateOn={updateOn}
+                        fetchWorkouts={fetchWorkouts} 
+                        token={props.token} 
+                    />
                 </Col>
             </Row>
         </Container>
