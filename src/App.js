@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Auth from './auth/Auth';
 import Sitebar from './home/Navbar';
+import WorkoutIndex from './workouts/WorkoutIndex';
 
 function App() {
   /*For authenticated requests, you need a token from the server when you sign up/log in. This token 
@@ -39,12 +40,25 @@ function App() {
     setSessionToken(''); //resetting state of sessionToken back to an empty string
   }
 
+  //this function allows something to conditionally display when there's a sessionToken
+  const protectedViews = () => {
+    return (sessionToken === localStorage.getItem('token') ? <WorkoutIndex token={sessionToken} />
+    : <Auth updateToken={updateToken} />) //if no local token, fire auth to try and grab one from the server
+    //passing updateToken as prop to Auth component so we can pass this function onto children
+    //passed the token prop into Workout Index which allows us to create request methods lower in our 
+      //component hierarchy that will need the token to access guarded data (our workouts).
+  }
+  //More on auth above...
+  /*
+  When there is no session token, the sessionToken state variable is reset to '' (an empty string) while the localStorage is cleared, erasing our token property. When an object has no property, it's undefined.  Therefore, the empty string stored by our sessionToken state variable is strictly unequal to the undefined token property in localStorage, and our Auth component is fired
+  */
+
   return (
     <div>
       {/* passing clearToken function to Sitebar component */}
-      <Sitebar clickLogout={clearToken} /> 
-      {/* passing updateToken as prop to Auth component so we can pass this function onto children */}
-      <Auth updateToken={updateToken}/>
+      <Sitebar clickLogout={clearToken} />
+      {/* Whenever App.js has a state change reloads to the DOM, our protectedViews function should fire */}
+      {protectedViews()}
     </div>
   );
 }
