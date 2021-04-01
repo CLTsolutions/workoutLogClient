@@ -42,6 +42,7 @@ const WorkoutTable = (props) => {
                     <td>{workout.description}</td>
                     <td>{workout.definition}</td>
                     <td>
+                        {/* using the functions passed as props from WorkoutIndex */}
                         <Button 
                             color='warning' 
                             onClick={() => {props.editUpdateWorkout(workout); props.updateOn()}}
@@ -49,7 +50,9 @@ const WorkoutTable = (props) => {
                         {/* onClick takes a callback function defined in our JSX.
                             - It calls deleteWorkout with a 'workout' argument, which is defined 
                                 -- through our .map in workoutMapper. */}
-                        <Button color='danger' onClick={() => {deleteWorkout(workout)}}>Delete</Button>
+                        <Button 
+                            color='danger' 
+                            onClick={() => {deleteWorkout(workout)}}>Delete</Button>
                     </td>
                 </tr>
             )

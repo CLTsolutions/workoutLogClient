@@ -75,9 +75,9 @@ const WorkoutIndex = (props) => {
                         fetchWorkouts={fetchWorkouts} 
                         token={props.token} />
                 </Col>
-                <Col>
+                <Col md='9'>
                 {/*Why so many props to WorkoutTable?
-                    *workouts are the workout objets WorkoutTable will be responsible for mapping to 
+                    *workouts are the workout objects WorkoutTable will be responsible for mapping to 
                         -- the page
                     *fetchWorkouts allows us to update the workouts shown to the page if the user 
                         -- decides to delete a workout
@@ -90,6 +90,10 @@ const WorkoutIndex = (props) => {
                         token={props.token} 
                     />
                 </Col>
+                {/* updateActive is boolean. If true display workoutEdit. If false, nothing. */}
+                {updateActive 
+                ? <WorkoutEdit workoutToUpdate={workoutToUpdate} updateOff={updateOff} token={props.token} fetchWorkouts={fetchWorkouts} />
+                : <></>}
             </Row>
         </Container>
     )
