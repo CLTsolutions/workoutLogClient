@@ -36,7 +36,6 @@ const WorkoutIndex = props => {
         // making sure server is grabbing an empty arr or workouts
         setWorkouts(logData)
       })
-    console.log(workouts)
   }
 
   // updates our workoutToUpdate state variable based upon the input to this function
