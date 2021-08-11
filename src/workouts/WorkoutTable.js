@@ -33,8 +33,7 @@ const WorkoutTable = props => {
   // -- key to repeated JSX elements so we use the index number of every workout as a unique
   // -- identifier for that <tr>
   const workoutMapper = () => {
-    // if (props.workouts.length > 0) {
-    props.workouts.map((workout, index) => {
+    return props.workouts.map((workout, index) => {
       return (
         <tr key={index}>
           <th scope='row'>{workout.id}</th>
@@ -52,9 +51,9 @@ const WorkoutTable = props => {
             >
               Update
             </Button>
-            {/* onClick takes a callback function defined in our JSX.
-                  - It calls deleteWorkout with a 'workout' argument, which is defined
-                  -- through our .map in workoutMapper. */}
+            {/* onClick takes a callback fn defined in our JSX.
+              - It calls deleteWorkout with a 'workout' argument, which is defined
+              -- through our .map in workoutMapper. */}
             <Button
               color='danger'
               onClick={() => {
@@ -67,9 +66,6 @@ const WorkoutTable = props => {
         </tr>
       )
     })
-    // } else {
-    // return <></>
-    // }
   }
 
   return (
@@ -85,8 +81,7 @@ const WorkoutTable = props => {
             <th>Definition</th>
           </tr>
         </thead>
-        <tbody>{props.workouts === null ? <></> : workoutMapper()}</tbody>
-        {/* <tbody>{workoutMapper()}</tbody> */}
+        <tbody>{workoutMapper()}</tbody>
       </Table>
     </>
   )

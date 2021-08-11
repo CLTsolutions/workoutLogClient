@@ -47,10 +47,12 @@ const WorkoutCreate = props => {
       <Form onSubmit={handleSubmit}>
         <FormGroup>
           <Label htmlFor='description' />
-          {/* The value of the input fields is defined by the state of this component. Without a way to change our state, the input values are locked. Hence using the onChange
-            - each onChange handler has a defined callback function.
-            -These callback functions accept the user event and update state based upon the target.value
-                -- (what the user types */}
+          {/* The value of the input fields is defined by the state of this component.
+          - W/out a way to change our state, the input values are locked.
+          -- Hence using the onChange
+          --- each onChange handler has a defined callback fn.
+          --- These callback fns accept the user event and update state based upon the target.
+          --- value (what the user types */}
           <Input
             name='description'
             value={description}

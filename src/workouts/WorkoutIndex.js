@@ -1,6 +1,6 @@
 // this component is responsible for conditionally loading the other 3 components and is our splash page.
-// main parents
-// The goal is to have a simple splash page active when the user successfully logs in/signs up.
+// main parent
+// Goal is to have a simple splash page active when the user successfully logs in/signs up.
 import React, { useState, useEffect } from 'react'
 import { Col, Container, Row } from 'reactstrap'
 import WorkoutCreate from './WorkoutCreate'
@@ -34,10 +34,9 @@ const WorkoutIndex = props => {
       // after getting back info from the server, we are saving the workout info to our state.
       .then(logData => {
         // making sure server is grabbing an empty arr or workouts
-        setWorkouts(logData.userLogs)
-        console.log(logData.userLogs)
-        console.log(logData)
+        setWorkouts(logData)
       })
+    console.log(workouts)
   }
 
   // updates our workoutToUpdate state variable based upon the input to this function

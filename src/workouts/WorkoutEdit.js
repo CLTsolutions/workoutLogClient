@@ -15,13 +15,13 @@ const WorkoutEdit = props => {
   const [editDef, setEditDef] = useState(props.workoutToUpdate.definition)
   const [editRes, setEditRes] = useState(props.workoutToUpdate.result)
 
-  //workoutUpdate takes 2 arguments. 1) avoids page reload, 2) used to specify workout
-  //--needing an update in our db
+  // workoutUpdate takes 2 arguments. 1) avoids page reload, 2) used to specify workout
+  // -- needing an update in our db
   const workoutUpdate = (event, workout) => {
     event.preventDefault()
     fetch(`http://localhost:3000/log/${props.workoutToUpdate.id}`, {
       method: 'PUT',
-      //append an object to body of our request w/ a form matching the input expected by our server.
+      // append an obj to body of our req w/ a form matching the input expected by our server.
       body: JSON.stringify({
         log: {
           description: editDesc,
@@ -34,7 +34,7 @@ const WorkoutEdit = props => {
         Authorization: `Bearer ${props.token}`,
       }),
     })
-      //Refetch all workouts so only workouts which haven't been deleted are detected.
+      // fetches all workouts again
       .then(res => {
         props.fetchWorkouts()
         props.updateOff()
